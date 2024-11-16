@@ -11,7 +11,7 @@ you can run script demo:
 
 - Our defense framework.
 <p align="center" >
-    <img src="fig/framework4.png" width="880" height="340" />"
+    <img src="fig/framework4.png" width="880" height="340" />
 
 <br>
 
