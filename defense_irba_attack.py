@@ -163,8 +163,7 @@ def test_clip(model, loader, num_class=40, device=None, clip_model=None, recon=N
     mean_correct = []
     class_acc = np.zeros((num_class, 3))
     classifier = model.eval()
-    # pdb.set_trace()
-    # print("test loader size==>>",len(loader))
+
     cnt = 0.
     total_size = 0
     cnt2 = 0.
@@ -182,11 +181,8 @@ def test_clip(model, loader, num_class=40, device=None, clip_model=None, recon=N
         pred_choice = pred.data.max(1)[1]
 
         total_size += pred_choice.size()[0]
-        # print(pred_choice)
-        # defense
 
         if clip_model is not None:
-            # pdb.set_trace()
             points = points.transpose(2,1)
             pred_clip = clip_model(points, target)
             pred_choice = pred_clip.data.max(1)[1]
@@ -200,10 +196,7 @@ def test_clip(model, loader, num_class=40, device=None, clip_model=None, recon=N
         mean_correct.append(correct.item() / float(points.size()[0]))
 
     if cnt > 0:
-        # print("gt with clip ==>>",float(cnt/total_size))
         pred_clip_res = float(cnt/total_size)
-        # print("gt with clip ==>>",float(clipcnt/total_size))
-        # print("CLIP success ==>> {:0.6f}".format(cnt2/float(total_size)))
 
     class_acc[:, 2] = class_acc[:, 0] / class_acc[:, 1]
 
@@ -330,7 +323,6 @@ def main(args):
     '''HYPER PARAMETER'''
     os.environ["CUDA_VISIBLE_DEVICES"] = args.gpu
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    # device = torch.device("cuda:3")
 
     '''CREATE DIR'''
     timestr = str(datetime.datetime.now().strftime('%Y-%m-%d_%H-%M'))
@@ -368,30 +360,18 @@ def main(args):
     if 'modelnet' in args.dataset:
         assert (num_class == 10 or num_class == 40)
         data_path = '/opt/data/private/Attack/IRBA/data/modelnet40_normal_resampled/'
-        # data_path = '/opt/data/private/datasets/modelnet40_normal_resampled/'
         train_dataset = BDModelNetDataLoader(root=data_path, args=args, split='train')
         test_dataset = ModelNetDataLoader(root=data_path, args=args, split='test')
         test_bd_dataset = BDModelNetDataLoader(root=data_path, args=args, split='test')
     elif args.dataset == 'shapenet':
         assert (num_class == 16)
         data_path = '/opt/data/private/Attack/IRBA/data/shapenetcore_partanno_segmentation_benchmark_v0_normal/'
-        # data_path = '/opt/data/private/datasets/shapenetcore_partanno_segmentation_benchmark_v0_normal/'
         train_dataset = BDShapeNetDataLoader(root=data_path, args=args, split='train')
         test_dataset = ShapeNetDataLoader(root=data_path, args=args, split='test')
         test_bd_dataset = BDShapeNetDataLoader(root=data_path, args=args, split='test')
 
     trainDataLoader = torch.utils.data.DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True, num_workers=10)
     testDataLoader = torch.utils.data.DataLoader(test_dataset, batch_size=args.batch_size, shuffle=False, num_workers=10)
-    
-    ### load npy
-    # attack_dir = '/opt/data/private/Attack/PCBA/attack_dgcnn_model40'
-    # attack_data_test = np.load(os.path.join(attack_dir, 'attack_data_test.npy'))
-    # attack_labels_test = np.load(os.path.join(attack_dir, 'attack_labels_test.npy'))
-    # attack_labels_test = attack_labels_test[:,np.newaxis]
-    # # print("attack_labels_test==>>",attack_labels_test.shape)
-    # test_bd_dataset.list_of_points = attack_data_test
-    # test_bd_dataset.list_of_labels = attack_labels_test
-    ### 
 
     testbdDataLoader = torch.utils.data.DataLoader(test_bd_dataset, batch_size=args.batch_size, shuffle=False, num_workers=10)
 
@@ -400,26 +380,6 @@ def main(args):
 
     classifier = model.get_model(num_class, normal_channel=args.use_normals)
     checkpoint_path = args.checkpoint_path
-    # checkpoint_path = str(checkpoints_dir) + '/last_model.pth'
-    
-    # checkpoint_path = '/opt/data/private/Attack/IRBA/log/modelnet10_pointnet_cls/5.0_5.0_16_0.1/irba-baseline/checkpoints/last_model.pth' # model10
-    # checkpoint_path = '/opt/data/private/Attack/PCBA/log/modelnet40_pointnet_cls/5.0_5.0_16_0.1/irba-baseline-40/checkpoints/last_model.pth' # model40
-    # checkpoint_path = '/opt/data/private/Attack/PCBA/log/shapenet_pointnet_cls/5.0_5.0_16_0.1/2024-10-19_08-06/checkpoints/last_model.pth'
-
-    # checkpoint_path = '/opt/data/private/Attack/PCBA/log/modelnet40_pointnet2_cls_msg/5.0_5.0_16_0.1/2024-10-19_08-27/checkpoints/last_model.pth' # pn++
-    # checkpoint_path = '/opt/data/private/Attack/PCBA/log/modelnet10_pointnet2_cls_msg/5.0_5.0_16_0.1/2024-10-19_14-26/checkpoints/last_model.pth'
-    # checkpoint_path = '/opt/data/private/Attack/PCBA/log/shapenet_pointnet2_cls_msg/5.0_5.0_16_0.1/2024-10-19_14-22/checkpoints/last_model.pth'
-
-    # checkpoint_path = '/opt/data/private/Attack/PCBA/log/modelnet10_dgcnn/5.0_5.0_16_0.1/2024-10-19_08-32/checkpoints/last_model.pth' # dgcnn
-    # checkpoint_path = '/opt/data/private/Attack/PCBA/log/modelnet40_dgcnn/5.0_5.0_16_0.1/2024-10-19_08-31/checkpoints/last_model.pth'
-    # checkpoint_path = '/opt/data/private/Attack/PCBA/log/shapenet_dgcnn/5.0_5.0_16_0.1/2024-10-19_14-40/checkpoints/last_model.pth'
-
-    # checkpoint_path = '/opt/data/private/Attack/PointAPA/checkpoints/ShapeNetPart_pointcnn/last_model.pth'
-    # checkpoint_path = '/opt/data/private/Attack/PCBA/log/modelnet10_pointcnn/5.0_5.0_16_0.1/2024-10-20_15-03/checkpoints/last_model.pth'
-    # checkpoint_path = '/opt/data/private/Attack/PCBA/log/modelnet40_pointcnn/5.0_5.0_16_0.1/2024-10-20_15-03/checkpoints/last_model.pth'
-
-    ############ pcba
-    # checkpoint_path = '/opt/data/private/Attack/PCBA/model_attacked_dgcnn_model40/model.pth'
 
     print("load checkpoint path===>>",checkpoint_path)
     if os.path.exists(checkpoint_path):
@@ -438,34 +398,7 @@ def main(args):
 
     z_dim = args.z_dim
     recon_model = CVAE(3, z_dim)    
-
-    # recon_model = CVAE(3, 512)
     recon_model_path = args.recon_model_path
-
-    # recon_model_path = '/opt/data/private/Attack/PCBA/checkpoint/2024/modelnet40-best-rec/best_parameters.tar' # model40 best
-    # recon_model_path = '/opt/data/private/Attack/PCBA/checkpoint/2024/modelnet40-noise-rec/best_parameters.tar' ## model40 attn
-    # recon_model_path = '/opt/data/private/Attack/PCBA/checkpoint/2024/modelnet40-best-rotation/best_parameters.tar' # model40 best rotation
-
-    ## modelnet40 256, 512, 2048
-    # recon_model_path = '/opt/data/private/Attack/PCBA/checkpoint/2024/rec-dim-256/best_parameters.tar'
-    # recon_model_path = '/opt/data/private/Attack/PCBA/checkpoint/2024/rec-dim-512/best_parameters.tar' 
-    # recon_model_path = '/opt/data/private/Attack/PCBA/checkpoint/2024/rec-dim-2048/best_parameters.tar'
-
-    ## uncond
-    # recon_model_path = '/opt/data/private/Attack/PCBA/checkpoint/2024/modelnet40-uncond/best_parameters.tar'
-
-    ## shapenet 256, 512, 2048
-    # recon_model_path = '/opt/data/private/Attack/PCBA/checkpoint/2024/rec-shape-dim-512/best_parameters.tar'  ## this is best 512
-    # recon_model_path = '/opt/data/private/Attack/PCBA/checkpoint/2024/rec-shape-dim-2048/best_parameters.tar' 
-    # recon_model_path = '/opt/data/private/Attack/PCBA/checkpoint/2024/rec-shape-dim-256/best_parameters.tar' 
-
-    # uncondition
-    # recon_model_path = '/opt/data/private/Attack/PCBA/checkpoint/2024/shapenet-uncond/best_parameters.tar'
-
-    ###
-    # recon_model_path = '/opt/data/private/Attack/PCBA/checkpoint/2024/modelnet10-best-rec/best_parameters.tar' # model10 ,1024
-    # recon_model_path = '/opt/data/private/Attack/PCBA/checkpoint/2024/shapenet-best-rec/best_parameters.tar' # shapnet, 1024
-    # recon_model_path = '/opt/data/private/Attack/PCBA/checkpoint/2024/shapenet-best-rotation-25/best_parameters.tar' # shapnet, 1024
 
     recon_model.load_state_dict(torch.load(recon_model_path)['model_state_dict'])
     # # recon_model.to(classifier.device)

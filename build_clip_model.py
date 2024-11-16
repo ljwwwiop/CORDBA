@@ -48,7 +48,7 @@ class Textual_Encoder(nn.Module):
         prompts = self.classnames
         # print(prompts)
         prompts = [f"a depth map photo of a {c}" for c in prompts]
-        print("prompts size==>>",len(prompts)," ",prompts)
+        # print("prompts size==>>",len(prompts)," ",prompts)
 
         prompts = torch.cat([clip.tokenize(p) for p in prompts]).to(device)
         text_feat = self.clip_model.encode_text(prompts).repeat(1, self.cfg.MODEL.PROJECT.NUM_VIEWS)
@@ -58,13 +58,11 @@ class Textual_Encoder(nn.Module):
 
 def load_clip_to_cpu(cfg, class_name):
     backbone_name = cfg.MODEL.BACKBONE.NAME
-    # url = clip._MODELS[backbone_name]
-    # model_path = clip._download(url)
-    # model_path = "/opt/data/private/few-shot-seg/PointCLIP_V2/ViT-B-16.pt"
+
     if len(class_name) > 20:
-        model_path = '/opt/data/private/Attack/PCBA/finetune_clip/best_parameters.pt'  ## modelnet40 
+        model_path = './clip_models/clip_modelnet40.pth'  ## modelnet40 
     else:
-        model_path = '/opt/data/private/Attack/PCBA/finetune_clip_shapepart/best_parameters.pt'
+        model_path = './clip_models/clip_shapenet.pth'
     try:
         # loading JIT archive
         model = torch.jit.load(model_path, map_location='cpu').eval()
@@ -73,7 +71,6 @@ def load_clip_to_cpu(cfg, class_name):
     except RuntimeError:
         ## here is really loader
         state_dict = torch.load(model_path, map_location='cpu')
-        state_dict = state_dict['model_state_dict']
     
     model = clip.build_model(state_dict or model.state_dict())
     return model
@@ -328,10 +325,10 @@ def extend_cfg():
     cfg = CN()
     cfg = get_cfg_default()
 
-    model_cfg_path = '/opt/data/private/Attack/PCBA/configs/vit_b16.yaml'
+    model_cfg_path = './configs/vit_b16.yaml'
     cfg.merge_from_file(model_cfg_path)
 
-    dataset_config_file = '/opt/data/private/few-shot-seg/PointCLIP_V2/zeroshot_cls/configs/datasets/modelnet40.yaml'
+    dataset_config_file = './configs/modelnet40.yaml'
     cfg.merge_from_file(dataset_config_file)
 
     cfg.freeze()

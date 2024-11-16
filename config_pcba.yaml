@@ -1,0 +1,43 @@
+batch_size: 30 # 30, 16
+
+device: 'cuda'
+
+input_point_nums: 1024
+
+ModelNet_path: '/opt/data/private/Attack/IRBA/data/modelnet40_normal_resampled/'
+
+ShapeNetPart_path: '/opt/data/private/Attack/IRBA/data/shapenetcore_partanno_segmentation_benchmark_v0_normal/'
+
+KITTI_path: '../DATA/KITTI/training/object_cloud'
+
+workers: 4
+
+nepoch: 150
+
+PCBA:
+  BD_NUM: 15
+  N: 1
+  BD_POINTS: 32
+  n_init: 10
+  NSTEP: 1000
+  PI: 0.01
+  STEP_SIZE: 0.1
+  MOMENTUM: 0.5
+  COST_INIT: 1.
+  COST_MAX: 1000
+  PATIENCE_UP: 5
+  PATIENCE_DOWN: 5
+  PATIENCE_CONVERGENCE: 100
+  COST_UP_MULTIPLIER: 1.5
+  COST_DOWN_MULTIPLIER: 1.5
+
+IRBA:
+  s: 5
+  h: 0.5
+  W: 16
+  angles: [5,5,5]
+
+PointBA:
+  centers: [0.05, 0.05, 0.05]
+  radius: 0.05
+  angles: [0,0,10]
