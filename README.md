@@ -8,8 +8,10 @@ we have provide preprocessed training data, test data, and checkpoints!! ğŸ‘ğŸ
 you can run script demo:
 `source run_defense_irba.sh` and `source run_defense_pcba.sh`
 
+
 ### Framework Figure
-![defense framework](./framework4.pdf)
+[(defense framework)](https://github.com/ljwwwiop/CORDBA/blob/main/framework4.pdf)
+
 
 <br>
 
