@@ -9,4 +9,6 @@ you can run script demo:
 `source run_defense_irba.sh` and `source run_defense_pcba.sh`
 
 <br>
-Thanks to [IRBA](https://github.com/KuofengGao/IRBA), [PCBA](https://github.com/zhenxianglance/PCBA), [PointCRT](https://github.com/CGCL-codes/PointCRT),  for their code open-sourcing!💐🌹
+
+Thanks to 
+[IRBA](https://github.com/KuofengGao/IRBA), [PCBA](https://github.com/zhenxianglance/PCBA) and [PointCRT](https://github.com/CGCL-codes/PointCRT) for their code open-sourcing!💐🌹
