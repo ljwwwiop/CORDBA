@@ -9,9 +9,9 @@ you can run script demo:
 `source run_defense_irba.sh` and `source run_defense_pcba.sh`
 
 
-### Framework Figure
-[(defense framework)](https://github.com/ljwwwiop/CORDBA/blob/main/framework4.pdf)
-
+- Our defense framework.
+<p align="center" >
+    <img src="fig/framework4.png" width="880" height="340" />"
 
 <br>
 
