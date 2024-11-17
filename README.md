@@ -11,9 +11,20 @@ you can run script demo:
 
 - Our defense framework.
 <p align="center" >
-    <img src="fig/framework4.png" width="880" height="340" />
+    <img src="fig/framework4.png" width="920" height="320" />
 
 <br>
+
+## TODO List
+
+<blockquote style="background-color: green; padding: 10px; border-radius: 5px;">
+    
+  - [x] Defense Framework
+  - [ ] CLIP Condition to Guide Diffusion
+  - [ ] ... 
+</blockquote>
+
+
 
 Thanks to 
 [IRBA](https://github.com/KuofengGao/IRBA), [PCBA](https://github.com/zhenxianglance/PCBA) and [PointCRT](https://github.com/CGCL-codes/PointCRT) for their code open-sourcing!💐🌹
