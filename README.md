@@ -3,7 +3,9 @@ CLIP-Guided Object Restoration for Defense Against 3D Point Cloud Backdoor Attac
 <br>
 
 ## **Here**
-we have provide preprocessed training data, test data, txt log and checkpoints!! 👍🏻 ✌🏻 [[Cloud Link]](https://cloud.189.cn/t/IbUNNbnquEby) password: eo48，😄✌🏻[[Google Link]](https://drive.google.com/drive/folders/1WWTRvM2JNeAaTORVYsVjgkpwW2F2ddwI)
+we have provide preprocessed training data, test data, txt log and checkpoints!!
+<br>
+👍🏻 ✌🏻 [[Cloud Link]](https://cloud.189.cn/t/IbUNNbnquEby) password: eo48，😄✌🏻[[Google Link]](https://drive.google.com/drive/folders/1WWTRvM2JNeAaTORVYsVjgkpwW2F2ddwI)
 <br>
 you can run script demo:
 `source run_defense_irba.sh` and `source run_defense_pcba.sh`
