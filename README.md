@@ -17,7 +17,7 @@ you can run script demo:
 
 <br>
 
-# Cross-Modal Driven Object Restoration for 3D Point Cloud Backdoor Defense - [TIFS 2026]
+# Cross-Modal Driven Object Restoration for 3D Point Cloud Backdoor Defense - [TIFS 2025](https://ieeexplore.ieee.org/abstract/document/11184257)
 
 <img width="1588" height="774" alt="image" src="https://github.com/user-attachments/assets/83532f40-1fa2-47c1-8dc0-c79e207c9b90" />
 
